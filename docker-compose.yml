@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dbms_postgres
+    environment:
+      POSTGRES_USER: dbms_user
+      POSTGRES_PASSWORD: dbms_password
+      POSTGRES_DB: os_logs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dbms_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: dbms_backend
+    environment:
+      DATABASE_URL: postgresql://dbms_user:dbms_password@db:5432/os_logs
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+
+  log_generator:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: dbms_log_generator
+    environment:
+      DATABASE_URL: postgresql://dbms_user:dbms_password@db:5432/os_logs
+      PYTHONUNBUFFERED: 1
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: python log_generator.py
+
+  ml_analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: dbms_ml_analyzer
+    environment:
+      DATABASE_URL: postgresql://dbms_user:dbms_password@db:5432/os_logs
+      PYTHONUNBUFFERED: 1
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: python ml_analyzer.py
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: dbms_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
