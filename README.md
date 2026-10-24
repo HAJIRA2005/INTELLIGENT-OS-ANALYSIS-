@@ -15,7 +15,9 @@ This project simulates real-time OS logging and analyzes it dynamically to find 
 4. **Frontend Architecture (React + Vite)**
    - A highly reactive, state-driven dashboard simulating professional SIEM (Security Information and Event Management) platforms. 
 
-## 🎤 Presentation Talking Points (For your Teacher)
-- *"Instead of using basic IF/ELSE statements to catch CPU overload, I implemented **Isolation Forest**, an unsupervised ML algorithm, to dynamically cluster normal metrics and find outliers."*
-- *"I used a multi-threaded microservice architecture. The python log generator feeds data directly into the **DBMS**, while entirely separately, the ML analyzer monitors that database and flags anomalies in real time."*
-- *"For the UI, I designed a **React-based Dashboard** incorporating Chart.js so you can view all data changes, spikes, and ML classifications the second they are injected into the database."*
+## project 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/89098ea4-7f2c-445f-b3cd-20c92532bed2" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/452e6a47-ca24-46eb-ba7c-7b57dfc987fc" />
+
+
