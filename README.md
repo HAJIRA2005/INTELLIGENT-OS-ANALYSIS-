@@ -15,7 +15,7 @@ This project simulates real-time OS logging and analyzes it dynamically to find 
 4. **Frontend Architecture (React + Vite)**
    - A highly reactive, state-driven dashboard simulating professional SIEM (Security Information and Event Management) platforms. 
 
-## project 
+## Screenshots
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/89098ea4-7f2c-445f-b3cd-20c92532bed2" />
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/452e6a47-ca24-46eb-ba7c-7b57dfc987fc" />
